@@ -1,0 +1,10 @@
+<launch>
+
+  
+  <node pkg="sick_tim" type="sick_tim551_2050001" name="sick_tim551_2050001" output="screen"/>
+   
+  <param name="/use_sim_time" value="ture"/>
+
+  
+ 
+</launch>

@@ -1,0 +1,7 @@
+image: ferly_1117.pgm
+resolution: 0.050000
+origin: [-18.081880, -9.167532, 0.000000]
+negate: 0
+occupied_thresh: 0.65
+free_thresh: 0.196
+

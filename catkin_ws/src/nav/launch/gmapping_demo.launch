@@ -1,0 +1,6 @@
+<launch>
+  <arg name="move_base_group" default="turtlebot" />
+  <include file="$(find nav)/launch/includes/gmapping.launch.xml" />
+  <include file="$(find nav)/launch/includes/move_base.launch.xml">
+  </include>
+</launch>

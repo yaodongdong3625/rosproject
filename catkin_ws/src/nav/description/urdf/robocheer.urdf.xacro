@@ -1,0 +1,284 @@
+<?xml version="1.0"?>
+<robot name="robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+<xacro:include filename="$(find base)/config/wheel.xacro"/>
+
+  <xacro:property name="deg_to_rad" value="0.01745329251994329577"/>
+
+  <!-- Constants for robot dimensions -->
+  <xacro:property name="width" value="0.376" /> <!-- Square dimensions (widthxwidth) of beams -->
+  <xacro:property name="wheel_radius" value="0.0625" /> <!-- Link 1 -->
+  <xacro:property name="thickness" value="0.03" /> <!-- Link 2 -->
+  <xacro:property name="axel_offset" value="0.05" /> <!-- Space btw top of beam and the each joint -->
+   
+    <link name="base_footprint">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.001 0.001 0.001" />
+      </geometry>
+      <material name="Green" />
+    </visual>
+    
+    <collision>
+      <origin xyz="0 0 0.0625" rpy="0 0 0" />
+      <geometry>
+        <box size="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+  </link>
+  
+  <joint name="base_footprint_joint" type="fixed">
+    <origin xyz="0 0 0.0625" rpy="0 0 0" />
+    <parent link="base_footprint"/>
+    <child link="base_link" />
+  </joint>
+  
+  <link name="base_link">
+    <inertial>
+      <mass value="2" />
+      <origin xyz="0 0 0.0" />
+      <inertia ixx="0.01" ixy="0.0" ixz="0.0"
+        iyy="0.01" iyz="0.0" izz="0.5" />
+    </inertial>  
+    <visual>
+      <origin xyz="0.1 0 0.0279" rpy="0 0 0" />
+      <geometry>
+        <box size="0.6 0.453 0.055803"/>      	
+        <mesh filename="package://aicroboxi_description/meshes/create/create_base.dae"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0.0 0.0 0.0308" rpy="0 0 0" />
+      <geometry>
+        <cylinder length="0.0611632" radius="0.016495"/>
+      </geometry>
+    </collision>
+  </link>
+  
+  
+    <!-- Wheels -->
+  <wheel name="wheel_0" parent="base" radius="${wheel_radius}" thickness="${thickness}">
+    <origin xyz="0 ${width/2} 0" rpy="${90 * deg_to_rad} 0 0"/>
+  </wheel>
+  <wheel name="wheel_1" parent="base" radius="${wheel_radius}" thickness="${thickness}">
+    <origin xyz="0 -${width/2} 0" rpy="${90 * deg_to_rad} 0 0"/>
+  </wheel>
+  
+    <joint name="front_castor_joint" type="fixed">
+    <origin xyz="0.290 0.0 0.0" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="front_wheel_link"/>
+    <axis xyz="0 0 1"/>
+  </joint>
+  
+  <link name="front_wheel_link">
+    <inertial>
+      <origin xyz="0 0 0" />
+      <mass value="0.01" />
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0"
+        iyy="0.001" iyz="0.0" izz="0.001" />
+    </inertial>
+     
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <sphere radius="0.0625" />
+      </geometry>
+       <material name="black">
+        <color rgba="0 0 0 1"/>
+      </material>
+    </visual>
+    
+    <collision>
+      <origin xyz="0 0 0" rpy="0 1.57079 1.57079" />
+      <geometry>
+        <sphere radius="0.0625" />
+      </geometry>
+    </collision>
+  </link>
+   <joint name="laser_joint" type="fixed">
+    <origin xyz="0.29 0 0.0558" rpy="3.1415 0 1.57079"/>
+    <parent link="base_link"/>
+    <child link="laser_link"/>
+  </joint>
+  <link name="laser_link">
+    <inertial>
+      <mass value="0.001"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="0.0001" ixy="0" ixz="0" 
+                 iyy="0.000001" iyz="0"
+                 izz="0.0001"/>
+    </inertial>
+    <visual>
+<origin xyz="0 0 0" rpy="0 0 0"/>
+	     <material name="green">
+		<color rgba="0 1 0 1"/>
+	      </material>
+	     <geometry>
+		<cylinder length="0.05" radius="0.04"/>
+	      </geometry>
+      </visual>
+  </link>
+  
+   <joint name="sonar_joint02" type="fixed">
+    <origin xyz="0.361 0.055 0.04106" rpy=" 0 0 0.42"/>
+    <parent link="base_footprint"/>
+    <child link="sonar_link02"/>
+  </joint>
+ <link name="sonar_link02">
+    <inertial>
+      <mass value="0.001"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="0.0001" ixy="0" ixz="0" 
+                 iyy="0.000001" iyz="0"
+                 izz="0.0001"/>
+    </inertial>
+    <visual>
+	<origin xyz="0 0 0" rpy="0 1.57079 0"/>
+	     <material name="green">
+		<color rgba="0 1 0 1"/>
+	      </material>
+	     <geometry>
+		<cylinder length="0.03" radius="0.01"/>
+	      </geometry>
+      </visual>
+  </link>
+  <joint name="sonar_joint03" type="fixed">
+    <origin xyz="0.138 0.190 0.158" rpy="0 0 0.78"/>
+    <parent link="base_footprint"/>
+    <child link="sonar_link03"/>
+  </joint>
+  <link name="sonar_link03">
+    <inertial>
+      <mass value="0.001"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="0.0001" ixy="0" ixz="0" 
+                 iyy="0.000001" iyz="0"
+                 izz="0.0001"/>
+    </inertial>
+    <visual>
+	<origin xyz="0 0 0" rpy="0 1.57079 0"/>
+	     <material name="green">
+		<color rgba="0 1 0 1"/>
+	      </material>
+	     <geometry>
+		<cylinder length="0.03" radius="0.01"/>
+	      </geometry>
+      </visual>
+  </link>
+  <joint name="sonar_joint04" type="fixed">
+    <origin xyz="-0.132 0.107 0.131" rpy="0 0 3.141"/>
+    <parent link="base_footprint"/>
+    <child link="sonar_link04"/>
+  </joint>
+  <link name="sonar_link04">
+    <inertial>
+      <mass value="0.001"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="0.0001" ixy="0" ixz="0" 
+                 iyy="0.000001" iyz="0"
+                 izz="0.0001"/>
+    </inertial>
+    <visual>
+	<origin xyz="0 0 0" rpy="0 1.5707 0"/>
+	     <material name="green">
+		<color rgba="0 1 0 1"/>
+	      </material>
+	     <geometry>
+		<cylinder length="0.03" radius="0.01"/>
+	      </geometry>
+      </visual>
+  </link>
+   <joint name="sonar_joint01" type="fixed">
+    <origin xyz="0.361 -0.055 0.04106" rpy="0 0 -0.42"/>
+    <parent link="base_footprint"/>
+    <child link="sonar_link01"/>
+  </joint>
+  <link name="sonar_link01">
+    <inertial>
+      <mass value="0.001"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="0.0001" ixy="0" ixz="0" 
+                 iyy="0.000001" iyz="0"
+                 izz="0.0001"/>
+    </inertial>
+    <visual>
+	<origin xyz="0 0 0" rpy="0 1.57079 0"/>
+	     <material name="green">
+		<color rgba="0 1 0 1"/>
+	      </material>
+	     <geometry>
+		<cylinder length="0.03" radius="0.01"/>
+	      </geometry>
+      </visual>
+  </link>
+   <joint name="sonar_joint06" type="fixed">
+    <origin xyz="0.138 -0.190 0.158" rpy="0 0 -0.78"/>
+    <parent link="base_footprint"/>
+    <child link="sonar_link06"/>
+  </joint>
+  <link name="sonar_link06">
+    <inertial>
+      <mass value="0.001"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="0.0001" ixy="0" ixz="0" 
+                 iyy="0.000001" iyz="0"
+                 izz="0.0001"/>
+    </inertial>
+    <visual>
+	<origin xyz="0 0 0" rpy="0 1.57079 0"/>
+	     <material name="green">
+		<color rgba="0 1 0 1"/>
+	      </material>
+	     <geometry>
+		<cylinder length="0.03" radius="0.01"/>
+	      </geometry>
+      </visual>
+  </link>
+  <joint name="sonar_joint05" type="fixed">
+    <origin xyz="-0.146 -0.107 0.1315" rpy="0 -3.1415 0"/>
+    <parent link="base_footprint"/>
+    <child link="sonar_link05"/>
+  </joint>
+  <link name="sonar_link05">
+    <inertial>
+      <mass value="0.001"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="0.0001" ixy="0" ixz="0" 
+                 iyy="0.000001" iyz="0"
+                 izz="0.0001"/>
+    </inertial>
+    <visual>
+	<origin xyz="0 0 0" rpy="0 -1.57079 0"/>
+	     <material name="green">
+		<color rgba="0 1 0 1"/>
+	      </material>
+	     <geometry>
+		<cylinder length="0.03" radius="0.01"/>
+	      </geometry>
+      </visual>
+  </link>
+   <joint name="imu_joint" type="fixed">
+    <origin xyz="-0.043 -0.034 0.1048" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="imu_link"/>
+  </joint>
+  <link name="imu_link">
+    <inertial>
+      <mass value="0.001"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="0.0001" ixy="0" ixz="0" 
+                 iyy="0.000001" iyz="0"
+                 izz="0.0001"/>
+    </inertial>
+    <visual>
+<origin xyz="0 0 0" rpy="0 0 0"/>
+	     <material name="green">
+		<color rgba="0 1 0 1"/>
+	      </material>
+	     <geometry>
+        <box size="0.01 0.01 0.001" />
+	      </geometry>
+      </visual>
+  </link>
+</robot>

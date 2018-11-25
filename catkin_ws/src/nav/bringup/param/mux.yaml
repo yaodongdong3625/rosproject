@@ -1,0 +1,35 @@
+# Created on: Oct 29, 2012
+#     Author: jorge
+# Configuration for subscribers to multiple cmd_vel sources.
+#
+# Individual subscriber configuration:
+#   name:           Source name
+#   topic:          The topic that provides cmd_vel messages
+#   timeout:        Time in seconds without incoming messages to consider this topic inactive
+#   priority:       Priority: an UNIQUE unsigned integer from 0 (lowest) to MAX_INT 
+#   short_desc:     Short description (optional)
+
+subscribers:
+  - name: "Default input"
+    topic: "/nav_cmd_vel"
+    timeout: 1
+    priority: 1
+    short_desc: "Default velocity topic"
+  - name: "angle control input"
+    topic: "/posectrl_cmd_vel"
+    timeout: 1
+    priority: 2
+    short_desc: "velocity topic"
+  - name: "manual_cmd_vel"
+    topic: "/aux/cmd_vel"
+    timeout: 1
+    priority: 3
+    short_desc: "ROS navigation stack controller"
+  - name: "operator_cmd"
+    topic: "/operator_cmd_vel"
+    timeout: 1
+    priority: 4
+  - name: "Keyboard teleop"
+    topic: "/key_cmd_vel"
+    timeout: 1
+    priority: 5

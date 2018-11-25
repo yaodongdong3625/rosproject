@@ -1,0 +1,10 @@
+<launch>
+
+  
+  <node pkg="rplidar_ros" type="rplidarNode" name="aicrobo_rplidar" output="screen"/>
+   
+  <param name="/use_sim_time" value="ture"/>
+
+  
+ 
+</launch>

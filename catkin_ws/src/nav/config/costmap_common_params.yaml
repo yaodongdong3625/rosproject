@@ -1,0 +1,23 @@
+obstacle_range: 5
+raytrace_range: 7.0
+footprint: [[0.28, 0], [0.087, 0.263], [0.164, 0.227],[0.227, 0.164], [0.263, 0.087],[0, 0.28],[-0.263, 0.087], [-0.227, 0.164], 
+[-0.164, 0.227], [-0.087, 0.263], [-0.28,0], [-0.087, -0.263], [-0.164, -0.227], [-0.227, -0.164], [-0.263, -0.087], [0, -0.28],
+[0.263, -0.087], [0.227, -0.164],[0.164, -0.227], [0.087, -0.263]]
+max_obstacle_height: 0.6
+min_obstacle_height: 0.0
+static_layer:
+   enabled:            true
+obstacle_layer:
+  observation_sources: scan
+  scan: {data_type: LaserScan, topic: /scan, marking: true, clearing: true, expected_update_rate: 0, inf_is_valid: true}
+  track_unknown_space: true
+sonar:
+  ns: ""
+  topics: ['/aux/ultrasonic01', '/aux/ultrasonic02', '/aux/ultrasonic03', '/aux/ultrasonic04', '/aux/ultrasonic05', '/aux/ultrasonic06']
+  no_readings_timeout: 0.0
+  clear_threshold: 0.5
+  mark_threshold: 0.8
+  clear_on_max_reading: true
+inflation_layer:
+  inflation_radius: 0.4
+  cost_scaling_factor: 2.0

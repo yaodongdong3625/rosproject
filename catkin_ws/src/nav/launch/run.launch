@@ -1,0 +1,8 @@
+<launch>
+  <include file="$(find base_control)/launch/base.launch">
+  <include file="$(find nav)/bringup/launch/sick_tim551.launch" />
+  <include file="$(find nav)/launch/amcl_demo.launch" />
+  <include file="$(find yocs_velocity_smoother)/launch/standalone.launch" />
+
+  </include>
+</launch>

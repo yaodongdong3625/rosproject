@@ -1,0 +1,3 @@
+<launch>
+   <node name="elec_map" pkg="nav" type="di.py" />
+</launch>

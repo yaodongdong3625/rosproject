@@ -1,0 +1,33 @@
+
+
+<launch>
+  <arg name="2dsensor"  default="$(optenv SENSOR_2D rplidar)"/>
+  <!-- rplidar, hokuyo, mylaser -->
+  <arg name="use_filter" default="$(optenv USE_FILTER false)"/>
+  <arg name="laser_port" default="/dev/ttyUSB0" />
+  <arg name="laser_frame" value="laser_link" />
+  <arg name="scan_topic" default="scan" />
+  <node name="mylaser" output="screen" pkg="laser_" type="mylaser" >
+  <param name="com_path" type="string" value="$(arg laser_port)" />
+  <param name="com_baudrate" type="int" value="115200" />
+  <param name="frame_id" type="string" value="$(arg laser_frame)" />
+  <param name="range_min" type="double" value="0.05" />
+  <param name="range_max" type="double" value="15.0" />
+  </node>
+
+
+  
+    
+    <!--remap from="scan" to="$(arg scan_topic)"/-->
+ 
+
+  
+    
+
+  
+  <include if="$(arg use_filter)" file="$(find aicroboxi_bringup)/launch/includes/laser_filter.launch.xml">
+    <arg name="scan_in" value="scan_raw"/>
+    <arg name="scan_out" value="scan"/>
+  </include>
+  
+</launch>

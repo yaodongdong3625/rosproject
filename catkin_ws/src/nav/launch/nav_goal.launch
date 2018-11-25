@@ -1,0 +1,5 @@
+<launch>
+  <node pkg="nav" type="navigation_goals" name ="navigation_goals" respawn="false" output="screen">
+    <rosparam file="$(find nav)/config/nav_goal.yaml" command="load" />
+  </node>
+</launch>

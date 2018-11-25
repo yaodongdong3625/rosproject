@@ -1,0 +1,4 @@
+string map_name
+ ---
+string type
+bool res

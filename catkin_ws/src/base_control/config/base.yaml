@@ -1,0 +1,14 @@
+base_port_name: /dev/ttyUSB0
+use_base: true
+imu_port_name: /dev/ttyUSB0
+use_imu: true
+publish_tf: true
+wheel_radius: 0.0605
+wheel_separation: 0.28
+wheel_reduction_radio: 1.0
+encoder_resolution: 4096
+publish_rate: 50
+controller_rate: 20
+max_linear_velocity: 0.6
+max_angular_velocity: 2.0
+cmd_time_out: 1000 #ms

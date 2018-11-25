@@ -1,0 +1,20 @@
+
+
+<launch>
+  <arg name="2dsensor"  default="$(optenv SENSOR_2D rplidar)"/>
+  <!-- rplidar, hokuyo, mylaser -->
+  <arg name="use_filter" default="$(optenv USE_FILTER false)"/>
+  
+
+
+  <node name="mylaser" output="screen" pkg="laser_" type="mylaser">
+  <arg name="laser_frame" value="laser_link" />
+  <remap from="/scan" to="/scan_raw"/>
+  </node>
+ 
+  <include if="$(arg use_filter)" file="$(find aicroboxi_bringup)/launch/includes/laser_filter.launch.xml">
+    <arg name="scan_in" value="scan_raw"/>
+    <arg name="scan_out" value="scan"/>
+  </include>
+  
+</launch>

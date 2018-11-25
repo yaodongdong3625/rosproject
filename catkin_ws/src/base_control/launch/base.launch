@@ -1,0 +1,6 @@
+<launch>
+  <rosparam command="load" file="$(find base_control)/config/base.yaml" />
+  <node name="base_control_node" pkg="base_control" type="base_control_node" args="　" output="screen"/>
+  <node pkg="tf" type="static_transform_publisher" name="laser_link_broadcaster" args="0.25 0 0 0 0 0 1 base_link laser_link 10" />
+  <node pkg="tf" type="static_transform_publisher" name="imu_link_broadcaster" args="0.0 0 0 0 0 0 1 base_link imu_link 10" />
+</launch>

@@ -1,0 +1,11 @@
+<launch>
+
+  
+  <node pkg="laser_" type="mylaser" name="mylaser" output="screen"/>
+  
+
+  <param name="/use_sim_time" value="ture"/>
+
+  
+ 
+</launch>

@@ -1,0 +1,38 @@
+<launch>
+
+  <param name="use_sim_time" value="false" />
+
+  <!-- Start the controller -->
+  <include file="$(find base)/launch/base_diff_drive_controller.test" />
+
+
+ <!-- Load diffbot model -->
+  <param name="robot_description"
+         command="$(find xacro)/xacro.py '$(find nav)/description/urdf/robocheer.urdf.xacro'" />
+  <param name="/use_sim_time" value="false"/>
+  <include file="$(find nav)/description/launch/robot_description.launch.xml">
+  </include>
+  
+ <!-- Set the name of the map yaml file: can be overridden on the command line. -->
+  <arg name="map" default="maps.yaml" />
+
+  <!-- Run the map server with the desired map -->
+  <node name="map_server" pkg="map_server" type="map_server" args="$(find nav)/maps/$(arg map)"/>
+
+  <!-- The move_base node -->
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    <rosparam file="$(find nav)/config/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find nav)/config/costmap_common_params.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find nav)/config/local_costmap_params.yaml" command="load" />
+    <rosparam file="$(find nav)/config/global_costmap_params.yaml" command="load" />
+    <rosparam file="$(find nav)/config/base_local_planner_params.yaml" command="load" />
+  </node>
+    
+  <!-- Run fake localization compatible with AMCL output -->
+  <node pkg="fake_localization" type="fake_localization" name="fake_localization" output="screen">
+     <remap from="base_pose_ground_truth" to="odom" />
+     <param name="global_frame_id" value="map" />
+     <param name="base_frame_id" value="base_footprint" />
+  </node>
+ 
+</launch>

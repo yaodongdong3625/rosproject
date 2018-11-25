@@ -1,0 +1,8 @@
+<launch>
+ <!-- Load diffbot model -->
+  <param name="robot_description"
+         command="$(find xacro)/xacro.py '$(find nav)/description/urdf/robocheer.urdf.xacro'" />
+  <param name="/use_sim_time" value="false"/>
+  <include file="$(find nav)/description/launch/robot_description.launch.xml">
+  </include>
+</launch>
